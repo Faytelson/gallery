@@ -1,5 +1,6 @@
 import Vue from "vue";
-import axios from "axios";
+import axiosInstance from "@/api/api";
+import { routes } from "@/api/apiRoutes";
 
 export const photos = {
   state: {
@@ -26,8 +27,8 @@ export const photos = {
     fetchPhotos(context, args) {
       const [offset, limit] = args;
       context.commit("PRELOADER_INC", null, { root: true });
-      axios
-        .get(`https://api.slingacademy.com/v1/sample-data/photos/?offset=${offset}&limit=${limit}`)
+      axiosInstance
+        .get(routes.GET_PHOTOS(offset, limit))
         .then((response) => {
           context.commit("SET_PHOTOS", response.data.photos);
           context.commit("SET_TOTAL_PICTURES", response.data.total_photos);
@@ -45,13 +46,14 @@ export const photos = {
     },
     sendPhotos(context, photo) {
       context.commit("PRELOADER_INC", null, { root: true });
-      fetch("https://api.slingacademy.com/v1/sample-data/photos", {
-        method: "PUT",
-        body: JSON.stringify(photo),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-      })
+      axiosInstance
+        .get(routes.ADD_PHOTOS, {
+          method: "PUT",
+          body: JSON.stringify(photo),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        })
         .then((response) => {
           if (response.status === 405) {
             Vue.$toast.error("Нельзя добавить новые фото");
