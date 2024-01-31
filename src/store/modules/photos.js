@@ -1,3 +1,4 @@
+import Vue from "vue";
 import axios from "axios";
 
 export const photos = {
@@ -24,16 +25,26 @@ export const photos = {
   actions: {
     fetchPhotos(context, args) {
       const [offset, limit] = args;
+      context.commit("PRELOADER_INC", null, { root: true });
       axios
         .get(`https://api.slingacademy.com/v1/sample-data/photos/?offset=${offset}&limit=${limit}`)
-        .then((res) => {
-          context.commit("SET_PHOTOS", res.data.photos);
-          context.commit("SET_TOTAL_PICTURES", res.data.total_photos);
-          console.log(res);
+        .then((response) => {
+          context.commit("SET_PHOTOS", response.data.photos);
+          context.commit("SET_TOTAL_PICTURES", response.data.total_photos);
+          if (response.data.photos.length <= 0) {
+            Vue.$toast.error("Изображений не найдено");
+          }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          Vue.$toast.error("Не удалось загрузить фотографии");
+          console.log(err);
+        })
+        .finally(() => {
+          context.commit("PRELOADER_DECR", null, { root: true });
+        });
     },
     sendPhotos(context, photo) {
+      context.commit("PRELOADER_INC", null, { root: true });
       fetch("https://api.slingacademy.com/v1/sample-data/photos", {
         method: "PUT",
         body: JSON.stringify(photo),
@@ -41,9 +52,18 @@ export const photos = {
           "Content-type": "application/json; charset=UTF-8",
         },
       })
-        .then((response) => response.json())
-        .then((json) => console.log(json))
-        .catch((err) => console.log(err));
+        .then((response) => {
+          if (response.status === 405) {
+            Vue.$toast.error("Нельзя добавить новые фото");
+          }
+        })
+        .catch((err) => {
+          Vue.$toast.error("Не удалось добавить фото");
+          console.log(err);
+        })
+        .finally(() => {
+          context.commit("PRELOADER_DECR", null, { root: true });
+        });
     },
   },
 };

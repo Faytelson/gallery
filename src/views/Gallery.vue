@@ -7,7 +7,7 @@
       </v-row>
       <PhotoDialog :photo="currentDialogPhoto" v-model="isDialog"></PhotoDialog>
       <div class="text-center">
-        <v-pagination v-model="currentPage" :length="getPaginationLength" prev-icon="mdi-menu-left" next-icon="mdi-menu-right"></v-pagination>
+        <v-pagination v-model="currentPage" @input="changeRoute" :length="getPaginationLength" prev-icon="mdi-menu-left" next-icon="mdi-menu-right"></v-pagination>
       </div>
     </v-container>
   </div>
@@ -35,16 +35,6 @@ export default {
     currentPage: 1,
     perPage: 12,
   }),
-  watch: {
-    currentPage(newCurrentPage) {
-      this.currentPage = newCurrentPage;
-      this.fetchPhotos();
-      this.$router.push({ name: "gallery", params: { page: this.currentPage } });
-    },
-    // '$route'(newRoute) {
-
-    // }
-  },
   methods: {
     fetchPhotos() {
       this.$store.dispatch("fetchPhotos", [this.setFetchParams.offset, this.setFetchParams.limit]);
@@ -57,7 +47,13 @@ export default {
       this.isDialog = true;
     },
     getQueryParams() {
-      this.currentPage = this.$router.params.page;
+      if (this.$route.params.page) {
+        this.currentPage = +this.$route.params.page;
+      }
+    },
+    changeRoute() {
+      this.fetchPhotos();
+      this.$router.push({ name: "gallery", params: { page: this.currentPage } });
     },
   },
   computed: {
@@ -65,11 +61,9 @@ export default {
       return this.$store.getters.GET_PHOTOS;
     },
     setFetchParams() {
-      let offset = (this.currentPage - 1) * this.perPage;
-      let limit = offset + this.perPage;
       return {
-        limit,
-        offset,
+        offset: (this.currentPage - 1) * this.perPage,
+        limit: this.perPage,
       };
     },
     getPaginationLength() {
