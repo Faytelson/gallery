@@ -1,15 +1,17 @@
 <template>
-  <v-container fluid>
-    <v-app-bar color="blue lighten-3">
-      <v-spacer></v-spacer>
-      <v-btn plain x-large class="mr-3">
-        <router-link :to="{ name: 'home' }">Главная</router-link>
-      </v-btn>
-      <v-btn plain x-large class="mr-3">
-        <router-link :to="{ name: 'gallery', params: { 'page': 1} }">Галерея</router-link>
-      </v-btn>
-    </v-app-bar>
-  </v-container>
+  <div class="navbar">
+    <div class="navbar__container">
+      <div class="navbar__inner">
+        <router-link class="navbar__logo-container" :to="{ name: 'home' }">
+          <img src="@/assets/images/logo.png" alt="" class="navbar__logo">
+        </router-link>
+        <div class="navbar__links">
+          <router-link class="navbar__link" :to="{ name: 'home' }">Main</router-link>
+          <router-link class="navbar__link" :to="{ name: 'gallery', params: { page: 1 } }">Gallery</router-link>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -18,4 +20,33 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.navbar {
+  background-color: $color-grey-10;
+  height: 80px;
+
+  &__container {
+    @include container;
+    height: 100%;
+  }
+
+  &__inner {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__links {
+    display: flex;
+    gap: 20px;
+  }
+
+  &__link {
+    @include font($font-main, 16px, 700);
+    color: $color-black;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+}
+</style>

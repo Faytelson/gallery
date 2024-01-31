@@ -1,15 +1,17 @@
 <template>
   <div class="gallery">
-    <v-container>
-      <PhotoFormVue @addPhoto="addPhoto"></PhotoFormVue>
-      <v-row align="stretch" v-if="getPhotos">
+    <div class="gallery__container">
+      <div class="gallery__form">
+        <PhotoFormVue @addPhoto="addPhoto"></PhotoFormVue>
+      </div>
+      <div class="gallery__items" align="stretch" v-if="getPhotos">
         <PhotoCardVue v-for="photo in getPhotos" :key="photo.id" :photo="photo" @openDialogPhoto="openDialogPhoto"></PhotoCardVue>
-      </v-row>
+      </div>
       <PhotoDialog :photo="currentDialogPhoto" v-model="isDialog"></PhotoDialog>
       <div class="text-center">
         <v-pagination v-model="currentPage" @input="changeRoute" :length="getPaginationLength" prev-icon="mdi-menu-left" next-icon="mdi-menu-right"></v-pagination>
       </div>
-    </v-container>
+    </div>
   </div>
 </template>
 
@@ -74,4 +76,26 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.gallery {
+  padding-top: 40px;
+
+  &__container {
+    @include container;
+  }
+
+  &__form {
+    margin-bottom: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__items {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 20px;
+    row-gap: 40px;
+  }
+}
+</style>

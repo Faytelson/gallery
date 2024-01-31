@@ -1,11 +1,11 @@
 <template>
-  <v-container>
+  <div class="photo-form">
     <v-row class="d-flex">
       <v-text-field v-model="title"></v-text-field>
       <v-file-input v-model="img"></v-file-input>
-      <v-btn @click="addPhoto">Добавить фото</v-btn>
+      <v-btn @click="addPhoto">Add photo</v-btn>
     </v-row>
-  </v-container>
+  </div>
 </template>
 
 <script>

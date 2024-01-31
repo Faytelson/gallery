@@ -1,0 +1,11 @@
+@mixin font($ff, $fz, $fw) {
+    font-family: $ff;
+    font-size: $fz;
+    font-weight: $fw;
+}
+
+@mixin container {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+}
