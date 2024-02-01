@@ -36,9 +36,8 @@ export const photos = {
             Vue.$toast.error("Изображений не найдено");
           }
         })
-        .catch((err) => {
+        .catch(() => {
           Vue.$toast.error("Не удалось загрузить фотографии");
-          console.log(err);
         })
         .finally(() => {
           context.commit("PRELOADER_DECR", null, { root: true });
@@ -47,21 +46,21 @@ export const photos = {
     sendPhotos(context, photo) {
       context.commit("PRELOADER_INC", null, { root: true });
       axiosInstance
-        .get(routes.ADD_PHOTOS, {
-          method: "PUT",
+        .post(routes.ADD_PHOTOS, {
           body: JSON.stringify(photo),
           headers: {
             "Content-type": "application/json; charset=UTF-8",
           },
         })
         .then((response) => {
-          if (response.status === 405) {
+          if (response.status === 200) {
+            Vue.$toast.success("Фото добавлено");
+          } else if (response.status === 405) {
             Vue.$toast.error("Нельзя добавить новые фото");
           }
         })
-        .catch((err) => {
+        .catch(() => {
           Vue.$toast.error("Не удалось добавить фото");
-          console.log(err);
         })
         .finally(() => {
           context.commit("PRELOADER_DECR", null, { root: true });
