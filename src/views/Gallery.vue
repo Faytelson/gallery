@@ -8,7 +8,7 @@
         <PhotoCardVue v-for="photo in getPhotos" :key="photo.id" :photo="photo" @openDialogPhoto="openDialogPhoto"></PhotoCardVue>
       </div>
       <PhotoDialog :photo="currentDialogPhoto" v-model="isDialog"></PhotoDialog>
-      <div class="text-center">
+      <div class="gallery__pagination text-center">
         <v-pagination v-model="currentPage" @input="changeRoute" :length="getPaginationLength" prev-icon="mdi-menu-left" next-icon="mdi-menu-right"></v-pagination>
       </div>
     </div>
@@ -35,7 +35,7 @@ export default {
     currentDialogPhoto: {},
     isDialog: false,
     currentPage: 1,
-    perPage: 12,
+    perPage: 9,
   }),
   methods: {
     fetchPhotos() {
@@ -79,6 +79,7 @@ export default {
 <style lang="scss" scoped>
 .gallery {
   padding-top: 40px;
+  padding-bottom: 120px;
 
   &__container {
     @include container;
@@ -89,6 +90,11 @@ export default {
     width: 100%;
     display: flex;
     justify-content: flex-end;
+    position: relative;
+
+    ::v-deep .v-file-input .v-input__control {
+      @include invisible;
+    }
   }
 
   &__items {
@@ -96,6 +102,14 @@ export default {
     grid-template-columns: repeat(3, 1fr);
     column-gap: 20px;
     row-gap: 40px;
+    margin-bottom: 60px;
+  }
+
+  &__pagination {
+    ::v-deep .v-pagination__item--active {
+      background-color: $color-grey-10 !important;
+      color: $color-black !important;
+    }
   }
 }
 </style>

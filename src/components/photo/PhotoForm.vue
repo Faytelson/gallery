@@ -1,10 +1,10 @@
 <template>
   <div class="photo-form">
-    <v-row class="d-flex">
+    <div class="photo-form__inner d-flex">
       <v-text-field v-model="title"></v-text-field>
       <v-file-input v-model="img"></v-file-input>
       <v-btn @click="addPhoto">Add photo</v-btn>
-    </v-row>
+    </div>
   </div>
 </template>
 
@@ -32,4 +32,38 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.photo-form {
+  &__inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  ::v-deep .v-text-field {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  ::v-deep .v-text-field__details {
+    @include invisible;
+  }
+
+  ::v-deep .v-input__slot {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+  ::v-deep .v-input__control {
+    height: 100%;
+  }
+
+  ::v-deep .v-input--is-focused {
+    color: $color-black !important;
+  }
+}
+</style>
