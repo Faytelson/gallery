@@ -79,7 +79,7 @@ export default {
 <style lang="scss" scoped>
 .gallery {
   padding-top: 40px;
-  padding-bottom: 120px;
+  padding-bottom: 80px;
 
   &__container {
     @include container;
@@ -102,7 +102,7 @@ export default {
     grid-template-columns: repeat(3, 1fr);
     column-gap: 20px;
     row-gap: 40px;
-    margin-bottom: 60px;
+    margin-bottom: 50px;
   }
 
   &__pagination {
