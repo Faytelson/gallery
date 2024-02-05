@@ -4,8 +4,11 @@
       <h1 class="home__title">
         <Title title="Visual Studio Art" :styleTypes="['main']"></Title>
       </h1>
-      <div class="home__info-block">
-        <InfoBlock></InfoBlock>
+      <div class="home__info-block" v-for="block in getInfoBlocks" :key="block.title">
+        <InfoBlock :info="block"></InfoBlock>
+      </div>
+      <div class="home__btn-more-container">
+        <button class="home__btn-more" v-if="!isLastBlock" @click="currentIndex++">More</button>
       </div>
     </div>
   </div>
@@ -13,13 +16,24 @@
 
 <script>
 import Title from "../components/ui/Title.vue";
-import InfoBlock from '@/components/InfoBlock.vue';
+import InfoBlock from "@/components/InfoBlock.vue";
 
 export default {
   name: "Home",
   components: {
     Title,
     InfoBlock,
+  },
+  data: () => ({
+    currentIndex: 0,
+  }),
+  computed: {
+    getInfoBlocks() {
+      return this.$store.getters.GET_INFO_BLOCKS.slice(0, this.currentIndex + 1);
+    },
+    isLastBlock() {
+      return this.$store.getters.GET_INFO_BLOCKS.length === this.currentIndex + 1;
+    },
   },
 };
 </script>
@@ -35,6 +49,36 @@ export default {
 
   &__title {
     margin-bottom: 40px;
+  }
+
+  &__info-block {
+    margin-bottom: 50px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__btn-more-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__btn-more {
+    @include font($font-main, 20px, 400);
+    color: $color-black;
+    background-color: $color-grey-10;
+    padding: 10px 20px;
+    width: 200px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    transition: color $transition-main, background-color $transition-main;
+
+    &:hover {
+      color: $color-white;
+      background-color: $color-black;
+    }
   }
 }
 </style>

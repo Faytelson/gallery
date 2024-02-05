@@ -1,12 +1,14 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import { photos } from "./modules/photos";
+import { mainPage } from "./modules/mainPage";
 
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   modules: {
     photos,
+    mainPage,
   },
   state: {
     preloader: 0,
