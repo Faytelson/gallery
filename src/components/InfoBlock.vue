@@ -19,7 +19,7 @@ import Title from "./ui/Title.vue";
 export default {
   name: "InfoBlock",
   props: {
-    info: Array,
+    info: Object,
   },
   components: {
     Title,

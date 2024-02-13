@@ -4,11 +4,13 @@
       <h1 class="home__title">
         <Title title="Visual Studio Art" :styleTypes="['main']"></Title>
       </h1>
-      <div class="home__info-block" v-for="block in getInfoBlocks" :key="block.title">
-        <InfoBlock :info="block"></InfoBlock>
-      </div>
+      <transition-group tag="div" name="appear">
+        <div class="home__info-block" v-for="block in getInfoBlocks" :key="block.title" ref="blocks">
+          <InfoBlock :info="block"></InfoBlock>
+        </div>
+      </transition-group>
       <div class="home__btn-more-container">
-        <button class="home__btn-more" v-if="!isLastBlock" @click="currentIndex++">More</button>
+        <button class="home__btn-more" v-if="!isLastBlock" @click="showNextBlock">More</button>
       </div>
     </div>
   </div>
@@ -34,6 +36,17 @@ export default {
     isLastBlock() {
       return this.$store.getters.GET_INFO_BLOCKS.length === this.currentIndex + 1;
     },
+  },
+  methods: {
+    showNextBlock() {
+      this.currentIndex++;
+    },
+  },
+  updated() {
+    window.scrollTo({
+      top: document.documentElement.offsetHeight,
+      behavior: "smooth",
+    });
   },
 };
 </script>
@@ -80,5 +93,15 @@ export default {
       background-color: $color-black;
     }
   }
+}
+
+.appear-enter-active,
+.appear-enter-active {
+  opacity: 0;
+  transition: opacity 0.3s linear;
+}
+
+.appear-enter-to {
+  opacity: 1;
 }
 </style>

@@ -5,7 +5,9 @@
         <NavBar></NavBar>
       </div>
       <div class="app__content">
-        <router-view></router-view>
+        <transition name="fade">
+          <router-view></router-view>
+        </transition>
       </div>
       <div class="app__preloader">
         <Preloader></Preloader>
@@ -31,9 +33,13 @@ export default {
 </script>
 
 <style lang="scss">
-.app {
-  &__preloader {
-
-  }
+.fade-enter {
+  opacity: 0;
+}
+.fade-enter-active {
+  transition: opacity 0.3s linear;
+}
+.fade-enter-to {
+  opacity: 1;
 }
 </style>
