@@ -8,6 +8,7 @@
         <div class="navbar__links">
           <router-link class="navbar__link" :to="{ name: 'home' }">Main</router-link>
           <router-link class="navbar__link" :to="{ name: 'gallery', params: { page: 1 } }">Gallery</router-link>
+          <router-link class="navbar__link" :to="{ name: 'blog', params: {page: 1} }">Blog</router-link>
         </div>
       </div>
     </div>

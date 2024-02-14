@@ -14,6 +14,11 @@ const routes = [
     component: () => import("@/views/Gallery"),
     name: "gallery",
   },
+  {
+    path: "/blog/:page",
+    component: () => import("@/views/Blog"),
+    name: "blog",
+  },
 ];
 
 export const router = new VueRouter({
