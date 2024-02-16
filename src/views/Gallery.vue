@@ -55,7 +55,9 @@ export default {
     },
     changeRoute() {
       this.fetchPhotos();
-      this.$router.push({ name: "gallery", params: { page: this.currentPage } });
+      if (this.$route.params.page !== this.currentPage) {
+        this.$router.push({ name: "gallery", params: { page: this.currentPage } });
+      }
     },
   },
   computed: {

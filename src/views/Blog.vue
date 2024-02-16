@@ -6,7 +6,9 @@
       </div>
       <div class="blog__posts">
         <div class="blog__post" v-for="post in getPosts" :key="post.title">
-          <Post :post="post"></Post>
+          <router-link :to="{ name: 'post', params: { id: post.id } }">
+            <PostPreview :post="post"></PostPreview>
+          </router-link>
         </div>
         <div class="blog__pagination">
           <v-pagination v-model="currentPage" @input="changeRoute" :length="getPaginationLength" prev-icon="mdi-menu-left" next-icon="mdi-menu-right"></v-pagination>
@@ -18,13 +20,13 @@
 
 <script>
 import Title from "@/components/ui/Title.vue";
-import Post from "./Post.vue";
+import PostPreview from "@/components/PostPreview.vue";
 
 export default {
   Name: "Blog",
   components: {
     Title,
-    Post,
+    PostPreview,
   },
   mounted() {
     this.setCurrentPage();
@@ -57,7 +59,9 @@ export default {
     },
     changeRoute() {
       this.fetchPosts();
-      this.$router.push({ name: "blog", params: { page: this.currentPage } });
+      if (this.$route.params.page !== this.currentPage) {
+        this.$router.push({ name: "blog", params: { page: this.currentPage } });
+      }
     },
     setCurrentPage() {
       if (this.$route.params.page) {
@@ -82,8 +86,10 @@ export default {
   }
 
   &__posts {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    max-width: 100%;
   }
 }
 </style>

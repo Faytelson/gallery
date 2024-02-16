@@ -6,6 +6,7 @@ export const posts = {
   state: {
     posts: null,
     totalPosts: null,
+    post: null,
   },
   getters: {
     GET_POSTS(state) {
@@ -14,6 +15,9 @@ export const posts = {
     GET_TOTAL_POSTS(state) {
       return state.totalPosts;
     },
+    GET_POST(state) {
+      return state.post;
+    },
   },
   mutations: {
     SET_POSTS(state, payload) {
@@ -21,6 +25,9 @@ export const posts = {
     },
     SET_TOTAL_POSTS(state, payload) {
       state.totalPosts = payload;
+    },
+    SET_POST(state, payload) {
+      state.post = payload;
     },
   },
   actions: {
@@ -38,6 +45,23 @@ export const posts = {
         })
         .catch(() => {
           Vue.$toast.error("Не удалось загрузить посты");
+        })
+        .finally(() => {
+          context.commit("PRELOADER_DECR", null, { root: true });
+        });
+    },
+    fetchPost(context, id) {
+      context.commit("PRELOADER_INC", null, { root: true });
+      axiosInstance
+        .get(routes.GET_POST(id))
+        .then((res) => {
+          context.commit("SET_POST", res.data.blog);
+          if (res.data.blog.length <= 0) {
+            Vue.$toast.error("Пост не найден");
+          }
+        })
+        .catch(() => {
+          Vue.$toast.error("Не удалось загрузить пост");
         })
         .finally(() => {
           context.commit("PRELOADER_DECR", null, { root: true });

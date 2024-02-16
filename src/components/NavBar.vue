@@ -3,12 +3,12 @@
     <div class="navbar__container">
       <div class="navbar__inner">
         <router-link class="navbar__logo-container" :to="{ name: 'home' }">
-          <img src="@/assets/images/logo.png" alt="" class="navbar__logo">
+          <img src="@/assets/images/logo.png" alt="" class="navbar__logo" />
         </router-link>
         <div class="navbar__links">
           <router-link class="navbar__link" :to="{ name: 'home' }">Main</router-link>
           <router-link class="navbar__link" :to="{ name: 'gallery', params: { page: 1 } }">Gallery</router-link>
-          <router-link class="navbar__link" :to="{ name: 'blog', params: {page: 1} }">Blog</router-link>
+          <router-link class="navbar__link" :to="{ name: 'blog', params: { page: 1 } }">Blog</router-link>
         </div>
       </div>
     </div>

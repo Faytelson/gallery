@@ -19,6 +19,11 @@ const routes = [
     component: () => import("@/views/Blog"),
     name: "blog",
   },
+  {
+    path: "/post/:id",
+    component: () => import("@/views/Post"),
+    name: "post",
+  },
 ];
 
 export const router = new VueRouter({
