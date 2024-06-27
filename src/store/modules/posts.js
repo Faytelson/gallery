@@ -7,6 +7,12 @@ export const posts = {
     posts: null,
     totalPosts: null,
     post: null,
+    categories: {
+      love: "#ff00ff",
+      math: "#0000ff",
+      gaming: "#006600",
+      programming: "#5500ff",
+    },
   },
   getters: {
     GET_POSTS(state) {
@@ -17,6 +23,9 @@ export const posts = {
     },
     GET_POST(state) {
       return state.post;
+    },
+    GET_CATEGORIES(state) {
+      return state.categories;
     },
   },
   mutations: {

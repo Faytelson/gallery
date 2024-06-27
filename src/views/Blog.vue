@@ -11,7 +11,7 @@
           </router-link>
         </div>
         <div class="blog__pagination">
-          <v-pagination v-model="currentPage" @input="changeRoute" :length="getPaginationLength" prev-icon="mdi-menu-left" next-icon="mdi-menu-right"></v-pagination>
+          <v-pagination v-model="currentPage" @input="changeRoute" :length="getPaginationLength" total-visible="10" prev-icon="mdi-menu-left" next-icon="mdi-menu-right"></v-pagination>
         </div>
       </div>
     </div>
@@ -48,7 +48,7 @@ export default {
     },
     getFetchParams() {
       return {
-        offset: this.currentPage * this.perPage,
+        offset: (this.currentPage - 1) * this.perPage,
         limit: this.perPage,
       };
     },
@@ -88,8 +88,15 @@ export default {
   &__posts {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    column-gap: 20px;
+    row-gap: 30px;
     max-width: 100%;
+  }
+
+  &__pagination {
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
 }
 </style>

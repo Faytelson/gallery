@@ -9,7 +9,7 @@
       </div>
       <PhotoDialog :photo="currentDialogPhoto" v-model="isDialog"></PhotoDialog>
       <div class="gallery__pagination text-center">
-        <v-pagination v-model="currentPage" @input="changeRoute" :length="getPaginationLength" prev-icon="mdi-menu-left" next-icon="mdi-menu-right"></v-pagination>
+        <v-pagination v-model="currentPage" @input="changeRoute" :length="getPaginationLength" total-visible="10" prev-icon="mdi-menu-left" next-icon="mdi-menu-right"></v-pagination>
       </div>
     </div>
   </div>
