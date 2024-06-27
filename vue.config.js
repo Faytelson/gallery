@@ -1,6 +1,6 @@
 const { defineConfig } = require("@vue/cli-service");
 module.exports = defineConfig({
-  // publicPath: process.env.NODE_ENV === "production" ? "/gallery-blog/" : "/",
+  publicPath: process.env.NODE_ENV === "production" ? "/gallery-blog/" : "/",
   css: {
     loaderOptions: {
       scss: {
@@ -9,4 +9,5 @@ module.exports = defineConfig({
     },
   },
   transpileDependencies: ["vuetify"],
+  base: "/gallery-blog/"
 });

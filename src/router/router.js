@@ -29,4 +29,5 @@ const routes = [
 export const router = new VueRouter({
   routes,
   mode: "history",
+  history: createWebHistory("/gallery-blog/")
 });
